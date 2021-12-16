@@ -10,8 +10,7 @@ file:
 package:
   nginx:
     installed: true
-    versions:
-      - 1.17.5-1~buster
+
 port:
   tcp:80:
     listening: true
