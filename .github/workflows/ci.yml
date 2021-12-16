@@ -39,15 +39,18 @@ jobs:
             ${{ github.repository }}:${{ steps.commit_sha.outputs.sha_short }}\
             dgoss run nginx:latest
 
+  docker-push:
+    needs: docker-build
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' }}
+    steps:
       - name: login to DockerHub
-        if: ${{ github.ref == 'refs/head/main' }}
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: build and push
-        if: ${{ github.ref == 'refs/head/main' }}
         uses: docker/build-push-action@v2
         with:
           context: .
